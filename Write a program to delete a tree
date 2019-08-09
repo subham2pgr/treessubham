@@ -1,0 +1,46 @@
+#include <iostream>
+
+using namespace std;
+struct Node{
+    int data;
+    struct Node *left,*right;
+};
+
+struct Node* newNode(int data)
+{
+    struct Node *temp=new Node;
+    temp->data=data;
+    temp->left=NULL;
+    temp->right=NULL;
+    return temp;
+}
+void deleteNodes(struct Node *ref_Node)
+{
+    if(ref_Node==NULL)
+    return;
+    
+    deleteNodes(ref_Node->left);
+    deleteNodes(ref_Node->right);
+     
+     cout<<"Deleting node"<<ref_Node->data<<" ";
+     free(ref_Node);
+     
+}
+void deleteNode(struct Node **ref_Node)
+{
+    deleteNodes(*ref_Node);
+    *ref_Node=NULL;
+}
+int main()
+{
+    struct Node* root=newNode(1);
+    root->left=newNode(2);
+    root->right=newNode(3);
+    root->left->left=newNode(4);
+    root->left->right=newNode(5);
+    
+    //pass address of root
+    deleteNode(&root);
+
+    return 0;
+}
