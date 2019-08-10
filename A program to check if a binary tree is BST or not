@@ -1,0 +1,56 @@
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <iostream>
+
+using namespace std;
+struct Node{
+    int data;
+    struct Node* left;
+    struct Node* right;
+};
+struct Node* newNode(int data)
+{
+    Node* temp = new Node;
+    temp->data=data;
+    temp->left=temp->right=NULL;
+    return temp;
+}
+bool isBST(struct Node *root)
+{
+    static Node* prev=NULL;
+    if(root)
+    {
+        if(!isBST(root->left))
+        return false;
+        
+        if(prev!=NULL && root->data<=prev->data)
+        return false;
+        
+        prev=root;
+        
+        return isBST(root->right);
+    }
+    return true;
+}
+
+int main()
+{
+    Node *root = newNode(4);  
+    root->left = newNode(2);  
+    root->right = newNode(5);  
+    root->left->left = newNode(1);  
+    root->left->right = newNode(3);  
+      
+    if(isBST(root))  
+        cout<<"Is BST";  
+    else
+        cout<<"Not a BST";  
+          
+    return 0;  
+}
