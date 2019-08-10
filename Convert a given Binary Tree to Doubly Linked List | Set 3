@@ -1,0 +1,71 @@
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+See Moon's notes
+and geeks for geeks video set 3
+
+#include <iostream>
+
+using namespace std;
+struct Node 
+{ 
+    int data; 
+    struct Node* left; 
+    struct Node* right; 
+}; 
+ struct Node* newNode(int data){
+    Node* temp = new Node;
+    temp->data=data;
+    temp->left=temp->right=NULL;
+    return temp;
+}
+void BinaryTree2DoubleLinkedList(struct Node* root,struct Node ** head)
+{
+    if(root==NULL)
+    return;
+     static struct Node* prev=NULL;
+     BinaryTree2DoubleLinkedList(root->left,head);
+     if(prev==NULL)
+       *head=root;
+       
+       else
+       {
+           root->left=prev;
+           prev->right=root;
+       }
+       prev=root;
+       BinaryTree2DoubleLinkedList(root->right,head);
+     
+}
+void printList(struct Node *node) 
+{ 
+    while (node!=NULL) 
+    { 
+        cout << node->data << " "; 
+        node = node->right; 
+    } 
+} 
+int main() 
+{ 
+    // Let us create the tree shown in above diagram 
+    Node *root        = newNode(10); 
+    root->left        = newNode(12); 
+    root->right       = newNode(15); 
+    root->left->left  = newNode(25); 
+    root->left->right = newNode(30); 
+    root->right->left = newNode(36); 
+  
+    // Convert to DLL 
+    Node *head = NULL; 
+    BinaryTree2DoubleLinkedList(root, &head); 
+  
+    // Print the converted list 
+    printList(head); 
+  
+    return 0; 
+} 
